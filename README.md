@@ -38,11 +38,11 @@ The application run with two profiles: the default profile (is the implicit one)
 
    Now the applications runs. The H2 console can be viewed at (if server started on 8080, if not change port accordingly): <http://localhost:8080/h2-console>. A window similar with this will be displayed 
 
-   ![1555662719536](C:\Users\iuliaiancu\Downloads\109311bb0361f32d87a2-8254b53ab8dcb18afc64287aaddd9e5b6059f880\109311bb0361f32d87a2-8254b53ab8dcb18afc64287aaddd9e5b6059f880\H2Console.png)
+   ![H2Console](D:\STSWorkspace\banking\banking\images\H2Console.png)
 
    Ensure JDBC URL is jdbc:h2:mem:testdb and username is sa. Press connect. You will see something similar with this:
 
-   ![1555662838717](C:\Users\iuliaiancu\Downloads\109311bb0361f32d87a2-8254b53ab8dcb18afc64287aaddd9e5b6059f880\109311bb0361f32d87a2-8254b53ab8dcb18afc64287aaddd9e5b6059f880\images\H2Panel.png)
+![H2Panel](D:\STSWorkspace\banking\banking\images\H2Panel.png)
 
 **Start the application with the dev profile:**
 
@@ -60,7 +60,7 @@ After creating database schema, please follow the next steps:
 
 After starting you should see three tables get created inside banking schema, as below:
 
-![1555663484484](C:\Users\iuliaiancu\Downloads\109311bb0361f32d87a2-8254b53ab8dcb18afc64287aaddd9e5b6059f880\109311bb0361f32d87a2-8254b53ab8dcb18afc64287aaddd9e5b6059f880\images\MySQLTableCreation)
+![1555673040295](D:\STSWorkspace\banking\banking\images\MySQLTables.png)
 
 ## Running the tests
 
@@ -144,3 +144,6 @@ The exposed endpoints are REST and use JSON.
       }
 
 The application supports also validation. For example you can't input an account that doesn't exists or isn't in the expected format (a number) or input a negative value for the sum. Also, you will receive an error message if you try to make a transaction using an account in which you don't have enough money. 
+
+
+
