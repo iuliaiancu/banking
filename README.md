@@ -38,11 +38,11 @@ The application run with two profiles: the default profile (is the implicit one)
 
    Now the applications runs. The H2 console can be viewed at (if server started on 8080, if not change port accordingly): <http://localhost:8080/h2-console>. A window similar with this will be displayed 
 
-   ![H2Console](D:\STSWorkspace\banking\banking\images\H2Console.png)
+   ![H2Console](\banking\banking\images\H2Console.png)
 
    Ensure JDBC URL is jdbc:h2:mem:testdb and username is sa. Press connect. You will see something similar with this:
 
-![H2Panel](D:\STSWorkspace\banking\banking\images\H2Panel.png)
+![H2Panel](\banking\banking\images\H2Panel.png)
 
 **Start the application with the dev profile:**
 
@@ -60,7 +60,7 @@ After creating database schema, please follow the next steps:
 
 After starting you should see three tables get created inside banking schema, as below:
 
-![1555673040295](D:\STSWorkspace\banking\banking\images\MySQLTables.png)
+![1555673040295](\banking\banking\images\MySQLTables.png)
 
 ## Running the tests
 
