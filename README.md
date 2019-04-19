@@ -114,34 +114,34 @@ The exposed endpoints are REST and use JSON.
 
    The only possible values for "idAccountFrom" and "idAccountTo" are 1 or 2. Also "idAccountFrom" and "idAccountTo" should have different values.
 
-   2. Endpoint for checking account balance and obtain list of transactions. 
+2. Endpoint for checking account balance and obtain list of transactions. 
 
-      Path: /accountStatement/1 (1 represent the id of account for which you wish to obtain the statement)
+   Path: /accountStatement/1 (1 represent the id of account for which you wish to obtain the statement)
 
-      Complete URL: http://localhost:8080/accountStatement/1
+   Complete URL: http://localhost:8080/accountStatement/1
 
-      Request Method: GET
+   Request Method: GET
 
-      Answer:
+   Answer:
 
-      {
-          "message": {
-              "headers": {},
-              "body": {
-                  "balance": 180,
-                  "transactions": [
-                      {
-                          "id": 1,
-                          "fromAccountId": 1,
-                          "toAccountId": 2,
-                          "sum": 20
-                      }
+   {
+       "message": {
+           "headers": {},
+           "body": {
+             "balance": 180,
+             "transactions": [
+                    {
+                        "id": 1,
+                        "fromAccountId": 1,
+                        "toAccountId": 2,
+                        "sum": 20
+                     }
                   ]
               },
               "statusCode": "OK",
               "statusCodeValue": 200
           }
-      }
+   }
 
 The application supports also validation. For example you can't input an account that doesn't exists or isn't in the expected format (a number) or input a negative value for the sum. Also, you will receive an error message if you try to make a transaction using an account in which you don't have enough money. 
 
