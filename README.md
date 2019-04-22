@@ -42,7 +42,7 @@ The application run with two profiles: the default profile (is the implicit one)
 
    Ensure JDBC URL is jdbc:h2:mem:testdb and username is sa. Press connect. You will see something similar with this:
 
-![H2Panel](\banking\banking\images\H2Panel.png)
+![H2Panel](https://github.com/iuliaiancu/banking/blob/master/images/H2Console.png)
 
 **Start the application with the dev profile:**
 
