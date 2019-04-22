@@ -7,7 +7,7 @@ A sandbox application for banking operations. Currently there are 2 operations s
 
 ## Getting Started
 
-To get a cop
+To get a copy you can either download the zip archive or clone the repository using https://github.com/iuliaiancu/banking.git.
 
 ### Prerequisites
 
@@ -24,7 +24,7 @@ The application run with two profiles: the default profile (is the implicit one)
 
 **Start the application with default profile:**
 
-1. Go to where you downloaded the folder containing the application. The folder name is banking.  Open a command prompt and run 
+1. Go to where you downloaded the folder containing the application. The folder name is banking. Open a command prompt and run 
 
    **mvn clean install -DskipTests**. This will create the target folder inside banking containing the executable jar.
 
@@ -38,11 +38,11 @@ The application run with two profiles: the default profile (is the implicit one)
 
    Now the applications runs. The H2 console can be viewed at (if server started on 8080, if not change port accordingly): <http://localhost:8080/h2-console>. A window similar with this will be displayed 
 
-   ![H2Console](D:\STSWorkspace\banking\banking\images\H2Console.png)
+   ![H2Console](https://github.com/iuliaiancu/banking/blob/master/images/H2Console.png)
 
    Ensure JDBC URL is jdbc:h2:mem:testdb and username is sa. Press connect. You will see something similar with this:
-
-![H2Panel](D:\STSWorkspace\banking\banking\images\H2Panel.png)
+   
+   ![H2Panel](https://github.com/iuliaiancu/banking/blob/master/images/H2Panel.png)
 
 **Start the application with the dev profile:**
 
@@ -60,7 +60,7 @@ After creating database schema, please follow the next steps:
 
 After starting you should see three tables get created inside banking schema, as below:
 
-![1555673040295](D:\STSWorkspace\banking\banking\images\MySQLTables.png)
+![MySQLTables](https://github.com/iuliaiancu/banking/blob/master/images/MySQLTables.png)
 
 ## Running the tests
 
@@ -114,34 +114,34 @@ The exposed endpoints are REST and use JSON.
 
    The only possible values for "idAccountFrom" and "idAccountTo" are 1 or 2. Also "idAccountFrom" and "idAccountTo" should have different values.
 
-   2. Endpoint for checking account balance and obtain list of transactions. 
+2. Endpoint for checking account balance and obtain list of transactions. 
 
-      Path: /accountStatement/1 (1 represent the id of account for which you wish to obtain the statement)
+   Path: /accountStatement/1 (1 represent the id of account for which you wish to obtain the statement)
 
-      Complete URL: http://localhost:8080/accountStatement/1
+   Complete URL: http://localhost:8080/accountStatement/1
 
-      Request Method: GET
+   Request Method: GET
 
-      Answer:
+   Answer:
 
-      {
-          "message": {
-              "headers": {},
-              "body": {
-                  "balance": 180,
-                  "transactions": [
-                      {
-                          "id": 1,
-                          "fromAccountId": 1,
-                          "toAccountId": 2,
-                          "sum": 20
-                      }
+   {
+       "message": {
+           "headers": {},
+           "body": {
+             "balance": 180,
+             "transactions": [
+                    {
+                        "id": 1,
+                        "fromAccountId": 1,
+                        "toAccountId": 2,
+                        "sum": 20
+                     }
                   ]
               },
               "statusCode": "OK",
               "statusCodeValue": 200
           }
-      }
+   }
 
 The application supports also validation. For example you can't input an account that doesn't exists or isn't in the expected format (a number) or input a negative value for the sum. Also, you will receive an error message if you try to make a transaction using an account in which you don't have enough money. 
 
