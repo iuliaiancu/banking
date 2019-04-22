@@ -39,9 +39,9 @@ public class SendMoneyTest {
 		TransferDTO transfer = createTransfer();
 		TransactionDTO transaction = moneyService.sendMoneyBetweenTwoAccounts(transfer);
 		assertNotNull(transaction);
-		assertEquals(new BigDecimal(190.00).doubleValue(),
+		assertEquals(new BigDecimal(999990.0).doubleValue(),
 				accountRepository.findById(fromAccount.getId()).get().getBalance().doubleValue(), 0);
-		assertEquals(new BigDecimal(360.00).doubleValue(),
+		assertEquals(new BigDecimal(1000010.0).doubleValue(),
 				accountRepository.findById(toAccount.getId()).get().getBalance().doubleValue(), 0);
 	}
 
