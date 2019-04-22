@@ -16,7 +16,6 @@ import com.sandbox.banking.dto.TransactionDTO;
 import com.sandbox.banking.dto.TransferDTO;
 import com.sandbox.banking.model.Account;
 import com.sandbox.banking.repository.AccountRepository;
-import com.sandbox.banking.repository.CustomerRepository;
 import com.sandbox.banking.service.MoneyService;
 
 @RunWith(SpringRunner.class)
@@ -27,8 +26,6 @@ public class SendMoneyTest {
 	private MoneyService moneyService;
 	@Autowired
 	private AccountRepository accountRepository;
-	@Autowired
-	private CustomerRepository customerRepository;
 	private Account fromAccount, toAccount;
 
 	@Before
