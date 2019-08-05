@@ -2,8 +2,8 @@
 
 A sandbox application for banking operations. Currently there are 2 operations supported:
 
-- sending money between 2 predefined accounts
-- get an account statement with account balance and list of completed transactions
+- creating an account for existing customers and make initial transaction if initial credit is greater than 0
+- see information of a customer (firstname, surname, balance, list of transactions)
 
 ## Getting Started
 
@@ -24,17 +24,17 @@ The application run with two profiles: the default profile (is the implicit one)
 
 **Start the application with default profile:**
 
-1. Go to where you downloaded the folder containing the application. The folder name is banking. Open a command prompt and run 
+1. Go to where you downloaded the folder containing the application. The folder name is banking_account. Open a command prompt and run 
 
-   **mvn clean install -DskipTests**. This will create the target folder inside banking containing the executable jar.
+   **mvn clean install -DskipTests**. This will create the target folder inside banking_account containing the executable jar.
 
 2. Go the the target folder and start the application using:
 
-   **java -jar banking-0.0.1-SNAPSHOT.jar**
+   **java -jar bankingAccount-0.0.1-SNAPSHOT.jar**
 
    **The application started with the default profile uses a in-memory database called H2.** The in-memory database gets destroyed every time the application is closed and recreated when the application is started.  The server starts by default on port 8080. If you need to change this port you can either modify in the application.properties file the line starting with server.port or specify the port when you start the application using the command:
 
-   **java -jar -Dserver.port=8082 banking-0.0.1-SNAPSHOT.jar**
+   **java -jar -Dserver.port=8082 bankingAccount-0.0.1-SNAPSHOT.jar**
 
    Now the applications runs. The H2 console can be viewed at (if server started on 8080, if not change port accordingly): <http://localhost:8080/h2-console>. A window similar with this will be displayed 
 
@@ -46,7 +46,7 @@ The application run with two profiles: the default profile (is the implicit one)
 
 **Start the application with the dev profile:**
 
-The dev profile tries to connect to a MySQL database, so MySQL need to be installed following the steps described in Prerequisites section. After that, you need to create a database empty schema called **banking**. You can use MySQL Workbench to create, or the command line. The application when starting with this profile, uses Flyway to create the tables and add initial data. The Flyway scripts are run automatically at application start-up.
+The dev profile tries to connect to a MySQL database, so MySQL need to be installed following the steps described in Prerequisites section. After that, you need to create a database empty schema called **banking_db**. You can use MySQL Workbench to create, or the command line. The application when starting with this profile, uses Flyway to create the tables and add initial data. The Flyway scripts are run automatically at application start-up.
 
 After creating database schema, please follow the next steps:
 
@@ -56,9 +56,9 @@ After creating database schema, please follow the next steps:
 
 2. Go the the target folder and start the application using the dev profile:
 
-   **java -jar -Dspring.profiles.active=dev banking-0.0.1-SNAPSHOT.jar**
+   **java -jar -Dspring.profiles.active=dev bankingAccount-0.0.1-SNAPSHOT.jar**
 
-After starting you should see three tables get created inside banking schema, as below:
+After starting you should see three tables get created inside banking_db schema, as below:
 
 ![MySQLTables](https://github.com/iuliaiancu/banking/blob/master/images/MySQLTables.png)
 
@@ -66,20 +66,29 @@ After starting you should see three tables get created inside banking schema, as
 
 The application has two types of tests:
 
-1. Unit tests mainly for services and validators. The tests can be run in the build phase using command **mvn clean install.**
+1. Unit tests for services, converters and validators. The tests can be run in the build phase using command **mvn clean install.**
 2. An end to end test (SendMoneyTest) that send money from one account to another and verifies resulting account balances are correct. This test will also be run when using mvn clean install command.
 
 ## Test data 
 
-For testing the application, I've created 2 predefined accounts and one predefined customer as follow 
+For testing the application, I've created 3 predefined customers as follows:
 
-1. First account identified with id 1 with an initial balance of 1000000
+1. Customer with id 1: Anna Smith
+2. Customer with id 2: John Daniels
+3. Customer with id 3: Karina Mackenzie
 
-2. Second account identified with id 2 with an initial balance of 1000000
+## Set-up front environemnt
 
-3. Customer identified with id 1
+I've created a simple front using angular. Because the application is hosted on Angular side, you need to have Node.js and Angular Cli installed. 
+1. Install Node.js server: You can download and install Node.js server using this link: https://nodejs.org/en/. Toghether with Node.js is installed the npm client command line interface.
+2. Install Angular CLI: from command line run: npm install -g @angular/cli
 
-   If you want to test the application outside of running the unit and end to end tests, you can send requests to the endpoints described below. For sending requests, you need to have a client installed. I've used POSTMAN, but you can use something else as Advanced REST Client.
+## Install front
+
+Front can be downloaded from github using this link:
+
+1. Install Angular dependencies: go to where you downloaded folder, open a command prompt and type: **npm install**.
+2. Start the Node.js server: **ng serve --watch --open**. By default it will launch the server listening on port 4200. This should open a browser window: http://localhost:4200
 
 ## Endpoints
 
@@ -145,5 +154,11 @@ The exposed endpoints are REST and use JSON.
 
 The application supports also validation. For example you can't input an account that doesn't exists or isn't in the expected format (a number) or input a negative value for the sum. Also, you will receive an error message if you try to make a transaction using an account in which you don't have enough money. 
 
+## Assumptions
+I've made the following assumptions:
 
+1. For the time being they are only customers identified by ids: 1,2,3. Those customers are predefined and created in the database once the application is started. Only those customers can be used to create accounts and make transactions.
+2. There are four types of accounts that can be created for a customer: DEFAULT_ACCOUNT, CURRENT_ACCOUNT, CREDIT, DEBIT.
+2. One customer can have one of each type of account. Once a call is fired to POST /account endpoint, this will result in creating a new account (if account isn't already tied to that customer) and make a transaction if initialCredit is greater than 0. Subsequent calls
+to POST /account for the same customer will make other deposits (transactions) to the account already created.
 

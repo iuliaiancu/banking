@@ -57,11 +57,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(errorsDetails, HttpStatus.BAD_REQUEST);
 	}
 
-	@ExceptionHandler(AccountNotFoundException.class)
-	public final ResponseEntity<List<ErrorDetails>> handleConstraintViolationException(AccountNotFoundException ex,
+	@ExceptionHandler(CustomerNotFoundException.class)
+	public final ResponseEntity<List<ErrorDetails>> handleConstraintViolationException(CustomerNotFoundException ex,
 			WebRequest request) {
 		List<ErrorDetails> errorsDetails = new ArrayList<>();
-		ErrorDetails errorDetails = new ErrorDetails(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Account not found",
+		ErrorDetails errorDetails = new ErrorDetails(ex.getCode().value(), "Customer not found",
 				ex.getLocalizedMessage());
 		errorsDetails.add(errorDetails);
 		return new ResponseEntity<>(errorsDetails, HttpStatus.INTERNAL_SERVER_ERROR);

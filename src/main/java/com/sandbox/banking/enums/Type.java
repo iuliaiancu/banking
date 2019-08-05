@@ -1,8 +1,8 @@
-package com.sandbox.banking.model;
+package com.sandbox.banking.enums;
 
 public enum Type {
 
-	CREDIT(0), DEBIT(1);
+	DEFAULT_ACCOUNT(0), CURRENT_ACCOUNT(1), DEBIT(2), CREDIT(3);
 
 	private Integer ordinal;
 

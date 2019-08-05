@@ -1,12 +1,12 @@
-DROP TABLE IF EXISTS `banking`.`customer`;
-CREATE TABLE `banking`.`customer` (
+DROP TABLE IF EXISTS `banking_db`.`customer`;
+CREATE TABLE `banking_db`.`customer` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(45) NOT NULL,
-  `telephone` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `surname` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
 
-DROP TABLE IF EXISTS `banking`.`account`;
-CREATE TABLE `banking`.`account` (
+DROP TABLE IF EXISTS `banking_db`.`account`;
+CREATE TABLE `banking_db`.`account` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `balance` DECIMAL(10, 2) NOT NULL,
   `type` SMALLINT(2) NOT NULL,
@@ -15,28 +15,21 @@ CREATE TABLE `banking`.`account` (
   INDEX `FK_customer_id_idx` (`customer_id` ASC),
   CONSTRAINT `FK_customer_id`
     FOREIGN KEY (`customer_id`)
-    REFERENCES `banking`.`customer` (`id`)
+    REFERENCES `banking_db`.`customer` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-DROP TABLE IF EXISTS `banking`.`transaction`;
-CREATE TABLE `banking`.`transaction` (
+DROP TABLE IF EXISTS `banking_db`.`transaction`;
+CREATE TABLE `banking_db`.`transaction` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `sum` DECIMAL(10,2) NOT NULL,
-  `from_account_id` INT NOT NULL,
-  `to_account_id` INT NOT NULL,
+  `id_account` INT NOT NULL,
   `date` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `FK_from_account_id_idx` (`from_account_id` ASC),
-  INDEX `FK_to_account_id_idx` (`to_account_id` ASC),
-  CONSTRAINT `FK_from_account_id`
-    FOREIGN KEY (`from_account_id`)
-    REFERENCES `banking`.`account` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `FK_to_account_id`
-    FOREIGN KEY (`to_account_id`)
-    REFERENCES `banking`.`account` (`id`)
+  INDEX `id_account` (`id_account` ASC),
+  CONSTRAINT `id_account`
+    FOREIGN KEY (`id_account`)
+    REFERENCES `banking_db`.`account` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 

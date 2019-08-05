@@ -3,7 +3,7 @@ package com.sandbox.banking.dto;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class AccountStatementDTO {
+public class AccountTransactionDTO {
 
 	private BigDecimal balance;
 
@@ -27,7 +27,7 @@ public class AccountStatementDTO {
 
 	@Override
 	public String toString() {
-		return "AccountStatementDTO [balance=" + balance + ", transactions=" + transactions + "]";
+		return "AccountTransactionDTO [balance=" + balance + ", transactions=" + transactions + "]";
 	}
 
 }

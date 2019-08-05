@@ -18,31 +18,40 @@ public class Transaction {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private long id;
 
 	@Column(name = "sum")
 	@NotNull
 	private BigDecimal sum;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "from_account_id")
+	@JoinColumn(name = "id_account")
 	@NotNull
-	private Account fromAccount;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "to_account_id")
-	@NotNull
-	private Account toAccount;
+	private Account account;
 
 	@Column(name = "date")
 	@NotNull
 	private LocalDateTime date;
 
-	public Long getId() {
+	public Transaction() {
+	};
+
+	public Transaction(BigDecimal sum, Account account, LocalDateTime date) {
+		this.sum = sum;
+		this.account = account;
+		this.date = date;
+	}
+
+	public Transaction(long id, BigDecimal sum, Account account, LocalDateTime date) {
+		this(sum, account, date);
+		this.id = id;
+	}
+
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -54,20 +63,12 @@ public class Transaction {
 		this.sum = sum;
 	}
 
-	public Account getFromAccount() {
-		return fromAccount;
+	public Account getAccount() {
+		return account;
 	}
 
-	public void setFromAccount(Account fromAccount) {
-		this.fromAccount = fromAccount;
-	}
-
-	public Account getToAccount() {
-		return toAccount;
-	}
-
-	public void setToAccount(Account toAccount) {
-		this.toAccount = toAccount;
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	public LocalDateTime getDate() {
@@ -82,7 +83,7 @@ public class Transaction {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
 
@@ -95,18 +96,14 @@ public class Transaction {
 		if (getClass() != obj.getClass())
 			return false;
 		Transaction other = (Transaction) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Transaction [id=" + id + ", sum=" + sum + ", fromAccount=" + fromAccount + ", toAccount=" + toAccount
-				+ ", date=" + date + "]";
+		return "Transaction [id=" + id + ", sum=" + sum + ", account=" + account + ", date=" + date + "]";
 	}
 
 }

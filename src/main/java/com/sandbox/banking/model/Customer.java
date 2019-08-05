@@ -15,14 +15,15 @@ public class Customer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private long id;
 
-	@Column(name = "email")
-	@NotNull(message = "Email should not be null")
-	private String email;
+	@Column(name = "name")
+	@NotNull(message = "Name should not be null")
+	private String name;
 
-	@Column(name = "telephone")
-	private String telephone;
+	@Column(name = "surname")
+	@NotNull(message = "Surname should not be null")
+	private String surname;
 
 	@OneToMany(mappedBy = "customer")
 	private Set<Account> accounts;
@@ -31,35 +32,38 @@ public class Customer {
 
 	}
 
-	public Customer(Long id, @NotNull(message = "Email should not be null") String email, String telephone) {
-		this();
-		this.id = id;
-		this.email = email;
-		this.telephone = telephone;
+	public Customer(String name, String surname) {
+		this.name = name;
+		this.surname = surname;
 	}
 
-	public Long getId() {
+	public Customer(long id, String name, String surname) {
+		this(name, surname);
+		this.id = id;
+	}
+
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getName() {
+		return name;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getTelephone() {
-		return telephone;
+	public String getSurname() {
+		return surname;
 	}
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	public Set<Account> getAccounts() {
@@ -74,7 +78,7 @@ public class Customer {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
 
@@ -87,17 +91,14 @@ public class Customer {
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", email=" + email + ", telephone=" + telephone + "]";
+		return "Customer [id=" + id + ", name=" + name + ", surname=" + surname + ", accounts=" + accounts + "]";
 	}
 
 }

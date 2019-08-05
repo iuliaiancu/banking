@@ -9,15 +9,15 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import com.sandbox.banking.validator.TransactionValidator;
+import com.sandbox.banking.validator.AccountValidator;
 
-@Constraint(validatedBy = TransactionValidator.class)
+@Constraint(validatedBy = AccountValidator.class)
 @Target({ ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface ValidTransaction {
+public @interface ValidAccount {
 
-	String message() default "Transaction can't be performed. Check if the accounts are valid and / or the account from which the transfer gets done has enough money";
+	String message() default "Account creation can't be performed. Cause: customer doesn't exists";
 
 	Class<?>[] groups() default {};
 

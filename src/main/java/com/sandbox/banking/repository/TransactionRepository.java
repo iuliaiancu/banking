@@ -11,6 +11,6 @@ import com.sandbox.banking.model.Transaction;
 @Repository("transactionRepository")
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-	List<Transaction> findTransactionsByFromAccount(Account account);
+	List<Transaction> findTransactionsByAccount(Account account);
 
 }
