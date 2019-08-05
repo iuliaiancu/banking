@@ -18,6 +18,8 @@ public class AccountTransactionConverter {
 
 	public Function<Account, AccountTransactionDTO> convertToDTO = (account) -> {
 		AccountTransactionDTO accountTransactionDTO = new AccountTransactionDTO();
+		accountTransactionDTO.setAccountId(account.getId());
+		accountTransactionDTO.setAccountType(account.getType());
 		accountTransactionDTO.setBalance(account.getBalance());
 		accountTransactionDTO
 				.setTransactions(transactionConverter.convertToDTOList.apply(account.getAccountTransactions()));
