@@ -64,10 +64,7 @@ After starting you should see three tables get created inside banking_db schema,
 
 ## Running the tests
 
-The application has two types of tests:
-
-1. Unit tests for services, converters and validators. The tests can be run in the build phase using command **mvn clean install.**
-2. An end to end test (SendMoneyTest) that send money from one account to another and verifies resulting account balances are correct. This test will also be run when using mvn clean install command.
+The application has unit tests for services, converters and validators. The tests can be run in the build phase using command **mvn clean install.**
 
 ## Test data 
 
@@ -77,82 +74,100 @@ For testing the application, I've created 3 predefined customers as follows:
 2. Customer with id 2: John Daniels
 3. Customer with id 3: Karina Mackenzie
 
-## Set-up front environemnt
-
-I've created a simple front using angular. Because the application is hosted on Angular side, you need to have Node.js and Angular Cli installed. 
-1. Install Node.js server: You can download and install Node.js server using this link: https://nodejs.org/en/. Toghether with Node.js is installed the npm client command line interface.
-2. Install Angular CLI: from command line run: npm install -g @angular/cli
-
-## Install front
-
-Front can be downloaded from github using this link:
-
-1. Install Angular dependencies: go to where you downloaded folder, open a command prompt and type: **npm install**.
-2. Start the Node.js server: **ng serve --watch --open**. By default it will launch the server listening on port 4200. This should open a browser window: http://localhost:4200
-
 ## Endpoints
 
-The exposed endpoints are REST and use JSON. 
+The exposed endpoints use REST and JSON. 
 
-1. Endpoint for sending money between the two predefined accounts described above.
+1. Endpoint for create account and make subsequent transactions (initial transaction is done when account is first created if initialCredit > 0)
+   Path: /account
 
-   Path: /sendMoney
-
-   Complete URL: http://localhost:8080/sendMoney
+   Complete URL: http://localhost:8080/account
 
    Request method: POST
 
    Request body:
-
-   {"idAccountFrom":1,
-   "idAccountTo":2,
-   "sum":20,
-   "customerId":1
+   
+   {"customerId":2,
+    "initialCredit":1000,
+    "accountType":"CURRENT_ACCOUNT"
    }
 
    Answer:
 
    {
-       "message": {
-           "headers": {},
-           "body": "Transaction succesfull. Moved 20 from account with id 1 to account with id 2",
-           "statusCode": "OK",
-           "statusCodeValue": 200
-       }
-   }
+    "message": {
+                "headers": {},
+                "body": {
+                          "id": 16,
+                          "initialCredit": 3000,
+                          "accountType": "CURRENT_ACCOUNT",
+                          "customerId": 2
+                         },
+        "statusCode": "OK",
+        "statusCodeValue": 200
+                }
+    }
 
-   The only possible values for "idAccountFrom" and "idAccountTo" are 1 or 2. Also "idAccountFrom" and "idAccountTo" should have different values.
+   The only possible values for "customerId" are 1, 2, 3.
+   The only possible values for "accountType" are DEFAULT_ACCOUNT, CURRENT_ACCOUNT, CREDIT, DEBIT.
+   
+2. Endpoint for checking customer information (name, surname, accounts, transactions) 
 
-2. Endpoint for checking account balance and obtain list of transactions. 
+   Path: /customer/1 (1 represent the id of customer for which you wish to obtain the information. Possible ids: 1, 2, 3)
 
-   Path: /accountStatement/1 (1 represent the id of account for which you wish to obtain the statement)
-
-   Complete URL: http://localhost:8080/accountStatement/1
+   Complete URL: http://localhost:8080/customer/2
 
    Request Method: GET
 
    Answer:
 
    {
-       "message": {
-           "headers": {},
-           "body": {
-             "balance": 180,
-             "transactions": [
-                    {
-                        "id": 1,
-                        "fromAccountId": 1,
-                        "toAccountId": 2,
-                        "sum": 20
-                     }
-                  ]
-              },
-              "statusCode": "OK",
-              "statusCodeValue": 200
-          }
-   }
+    "message": {
+        "headers": {},
+        "body": {
+            "name": "John",
+            "surname": "Daniels",
+            "accountTransactions": [
+                {
+                    "accountId": 15,
+                    "accountType": "DEFAULT_ACCOUNT",
+                    "balance": 2000,
+                    "transactions": [
+                        {
+                            "transactionId": 18,
+                            "accountId": 15,
+                            "sum": 2000,
+                            "date": "2019-08-05T09:06:59"
+                        }
+                    ]
+                },
+                {
+                    "accountId": 16,
+                    "accountType": "CURRENT_ACCOUNT",
+                    "balance": 3000,
+                    "transactions": [
+                        {
+                            "transactionId": 19,
+                            "accountId": 16,
+                            "sum": 2000,
+                            "date": "2019-08-05T09:08:14"
+                        },
+                        {
+                            "transactionId": 20,
+                            "accountId": 16,
+                            "sum": 1000,
+                            "date": "2019-08-05T09:08:22"
+                        }
+                    ]
+                }
+            ]
+        },
+        "statusCode": "OK",
+        "statusCodeValue": 200
+    }
+}
 
-The application supports also validation. For example you can't input an account that doesn't exists or isn't in the expected format (a number) or input a negative value for the sum. Also, you will receive an error message if you try to make a transaction using an account in which you don't have enough money. 
+The application supports also validation. For example you can't enter a negative initial credit on creatin an account. Also you can't retrieve information for a customer that doesn't exists in the database.
 
 ## Assumptions
 I've made the following assumptions:
